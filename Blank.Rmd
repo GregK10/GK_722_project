@@ -1,3 +1,8 @@
+Welcome to my 722 project Github page.
+For my project I decided to investigate all the microsatellite loci from select strains of A.fumigatus
+
+
+
 ```{r}
 print("hello world")
 ```
