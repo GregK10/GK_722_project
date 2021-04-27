@@ -7,3 +7,9 @@ For my project I decided to investigate all the microsatellite loci from select 
 print("hello world")
 ```
 
+
+
+```{bash}
+/usr/local/sratoolkit/fastq-dump.2.8.2 SRR12894203 > CM21.fastq
+```
+
