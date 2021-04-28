@@ -12,6 +12,14 @@ Once downloaded from NCBI, the file format was changed to fastq.
 
 Need to open up the sra_toolkit on shracnet
 
+
+```{bash}
+pip install biopython --no-index
+pip install regex --no-index
+pip install tqdm --no-index
+```
+
+
 ```{bash}
 module load StdEnv/2020
 module load gcc/9.3.0
@@ -22,22 +30,46 @@ module load gcc/9.3.0
 ```{bash}
 #!/bin/bash
 #SBATCH --account=def-jpxu
-#SBATCH --time=10:35:00
-#SBATCH --cpus-per-task=16
+#SBATCH --time=01:15:00
+#SBATCH --cpus-per-task=8
 #SBATCH —nodes=2
-#SBATCH --mem=60G
+#SBATCH --mem=30G
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
+/usr/local/sratoolkit/fastq-dump.2.8.2 --split-files $1
+```
+
+Make it an executable
+```{bash}
+chmod +x SRR_fastq.sh
 ```
 
 
-
-
-
-
+A CM21 strain
 ```{bash}
 /usr/local/sratoolkit/fastq-dump.2.8.2 --split-files SRR12894203
 ```
+
+
+Testing the reference strain for Microsats
+```{bash}
+#!/bin/bash
+#SBATCH --account=def-jpxu
+#SBATCH --time=00:03:00
+#SBATCH --cpus-per-task=4
+#SBATCH —nodes=2
+#SBATCH --mem=15G
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+PERF --input $1 --output $2 --analyse
+
+```
+
+
+```{bash}
+scp -r gk1995@graham.computecanada.ca:~/722_project/perf_* .
+```
+
 
 
 Obtaining and using perf (reference to paper here)
