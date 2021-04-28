@@ -61,7 +61,7 @@ Testing the reference strain for Microsats
 #SBATCH --mem=15G
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-PERF --input $1 --output $2 --analyse
+PERF --input $1 --output $2 -- --analyse
 
 ```
 
