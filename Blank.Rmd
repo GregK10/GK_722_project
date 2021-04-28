@@ -3,13 +3,59 @@ For my project I decided to investigate all the microsatellite loci from select 
 
 
 
-```{r}
-print("hello world")
+```{bash}
+wget https://sra-download.ncbi.nlm.nih.gov/traces/sra50/SRR/012591/SRR12894203
+```
+
+
+Once downloaded from NCBI, the file format was changed to fastq.
+
+Need to open up the sra_toolkit on shracnet
+
+```{bash}
+module load StdEnv/2020
+module load gcc/9.3.0
 ```
 
 
 
 ```{bash}
-/usr/local/sratoolkit/fastq-dump.2.8.2 SRR12894203 > CM21.fastq
+#!/bin/bash
+#SBATCH --account=def-jpxu
+#SBATCH --time=10:35:00
+#SBATCH --cpus-per-task=16
+#SBATCH —nodes=2
+#SBATCH --mem=60G
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
 ```
+
+
+
+
+
+
+```{bash}
+/usr/local/sratoolkit/fastq-dump.2.8.2 --split-files SRR12894203
+```
+
+
+Obtaining and using perf (reference to paper here)
+This gave me a bit of trouble getting it to work on the cluster
+
+
+
+
+Downloading and preparing the reference genome Af293
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/655/GCF_000002655.1_ASM265v1/GCF_000002655.1_ASM265v1_genomic.fna.gz
+
+
+gunzip GCF_000002655.1_ASM265v1_genomic.fna.gz
+For simplicity, the name of this reference fasta file will be changed to Af293.fa
+
+mv GCF_000002655.1_ASM265v1_genomic.fna ref_Af293.fa
+An index file for the reference genome is then made using bwa. This will be done in advance as we will be using BWA-MEM for read alignment later on
+
+bwa index Af293.fa
 
