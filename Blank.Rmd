@@ -1,18 +1,52 @@
+README page
+
+
+
+
+
+
 Welcome to my 722 project Github page.
+
+In this project, I used both Brian's Cluster and Sharcnet to conduct my analyses. I jumped between the two as I could not get the PERF program to work from within my home directory. Therefore I moved to Sharcnet to get that aspect of my project done. I detatiled waht PERF does below.
+
+
+
 For my project I decided to investigate all the microsatellite loci from select strains of A.fumigatus
 
 
-
+I downloaded the SRR file 
 ```{bash}
 wget https://sra-download.ncbi.nlm.nih.gov/traces/sra50/SRR/012591/SRR12894203
 ```
 
 
-Once downloaded from NCBI, the file format was changed to fastq.
-
-Need to open up the sra_toolkit on shracnet
 
 
+
+```{bash}
+module load fastqc
+mkdir ~/scratch/fastqc_outputs 
+nano fastqc.sh
+```
+```{bash}
+fastqc.sh script
+
+#!/bin/bash
+#SBATCH --account=def-jpxu
+#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=8
+#SBATCH --nodes=2
+#SBATCH --mem=8G
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+fastqc *.fastq -o ~/scratch/fastqc_outputs/
+
+```
+
+
+
+
+Installing the dependencies required for PERF to run
 ```{bash}
 pip install biopython --no-index
 pip install regex --no-index
@@ -20,11 +54,14 @@ pip install tqdm --no-index
 ```
 
 
+Once downloaded from NCBI, the file format was changed to fastq.
+
+Need to open up the sra_toolkit on shracnet
 ```{bash}
 module load StdEnv/2020
 module load gcc/9.3.0
-```
 
+```
 
 
 ```{bash}
@@ -36,7 +73,7 @@ module load gcc/9.3.0
 #SBATCH --mem=30G
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-/usr/local/sratoolkit/fastq-dump.2.8.2 --split-files $1
+fasterq-dump --split-files $1
 ```
 
 Make it an executable
@@ -52,18 +89,36 @@ A CM21 strain
 
 
 Testing the reference strain for Microsats
+
+
+
+
+THe GFF file with annotation details for af293. Download it from NCBI and unzip it using tar
+This gave me trouble to get it to work
+
+```{bash}
+tar -xvf genome_assemblies_genome_gff.tar > af293.GFF
+gunzip ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff.gz
+mv ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff af293.GFF
+```
+
 ```{bash}
 #!/bin/bash
 #SBATCH --account=def-jpxu
 #SBATCH --time=00:03:00
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=6
 #SBATCH —nodes=2
 #SBATCH --mem=15G
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-PERF --input $1 --output $2 -- --analyse
+PERF --input $1 --output $2 --anotate $3 --analyse 
 
 ```
+```{bash}
+~/bash_files/perf.sh ref_Af293.fa perf_af293_12 af293.GFF
+```
+
+
 
 
 ```{bash}
