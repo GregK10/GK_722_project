@@ -1,0 +1,43 @@
+---
+title: "Obtaining_trimming_and_QC_of_reads"
+output: html_document
+---
+
+With PERF capable to identify all microsatellites within the A.fumimgatus reference genome, I wanted to conduct test PERF with a genome constructed from raw reads.
+Therefore, I have obtained the raw reads of CM21, a A. fumigatus strains obtained by my lab. The raw reads were obtained from NCBI. and uploaded to sharcnet.
+
+```{bash}
+ mkdir reads ; cd reads/
+ 
+ wget https://sra-download.ncbi.nlm.nih.gov/traces/sra50/SRR/012591/SRR12894203
+ module load StdEnv/2020
+ module load gcc/9.3.0
+ module load sra-toolkit/2.10.8
+ 
+```
+ 
+ First the SSR needs to be converted into a fastq files. As paired end were
+ 
+ 
+ 
+ 
+An index file for the reference genome is then made using bwa. This will be done in advance as we will be using BWA-MEM for read alignment later on
+ 
+```{bash}
+
+
+#!/bin/bash
+#SBATCH --account=def-jpxu
+#SBATCH --time=01:15:00
+#SBATCH --cpus-per-task=8
+#SBATCH —nodes=2
+#SBATCH --mem=30G
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+fasterq-dump --split-files *.fastq
+```
+
+Make it an executable
+```{bash}
+chmod +x SRR_fastq.sh
+```

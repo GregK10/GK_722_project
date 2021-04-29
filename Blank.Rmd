@@ -3,92 +3,124 @@ README page
 Welcome to my 722 project Github page. For my project, I looked to identify and investigate microsatellite loci from reference and a lab strain of A.fumigatus
 
 
-In this project, I used Sharcnet to conduct my analyses. I jumped between the two as I could not get the PERF program to work from within my home directory. Therefore I moved to Sharcnet to get that aspect of my project done. I detailed what PERF does below.
-
-
-
-
-I downloaded the SRR file 
-```{bash}
-wget https://sra-download.ncbi.nlm.nih.gov/traces/sra50/SRR/012591/SRR12894203
-```
-
-
-
-```{bash}
-module load fastqc
-mkdir ~/scratch/fastqc_outputs 
-nano fastqc.sh
-```
-```{bash}
-fastqc.sh script
-
-#!/bin/bash
-#SBATCH --account=def-jpxu
-#SBATCH --time=00:30:00
-#SBATCH --cpus-per-task=8
-#SBATCH --nodes=2
-#SBATCH --mem=8G
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-
-fastqc *.fastq -o ~/scratch/fastqc_outputs/
-
-```
-
+In this project, I used Sharcnet to conduct my analyses. I initially attempted to use Brian's cluster, but I had difficulties getting perf to work. The authors primary suggestion was to use the pip install, but we are discouragred from using it on the cluster. The alterante methods did not work for me so I switched to running the program on Sharcnet. I detailed what PERF does below.
 
 
 
 Installing the dependencies required for PERF to run
 ```{bash}
-pip install biopython --no-index
-pip install regex --no-index
-pip install tqdm --no-index
+$ mkdir 722_project ; cd 722_project/
+$ module load python/3
+$ pip install biopython --no-index
+$ pip install regex --no-index
+$ pip install tqdm --no-index
+$ pip install perf_ssr
 ```
 
 
-Once downloaded from NCBI, the file format was changed to fastq.
 
-Need to open up the sra_toolkit on shracnet
+Next, I downloaded the reference genome for A. fumigatus. The strain ID is af293
 ```{bash}
-module load StdEnv/2020
-module load gcc/9.3.0
-
+$ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/655/GCF_000002655.1_ASM265v1/GCF_000002655.1_ASM265v1_genomic.fna.gz
+$ gunzip GCF_000002655.1_ASM265v1_genomic.fna.gz ; mv GCF_000002655.1_ASM265v1_genomic.fna.gz ref_af293.fa
 ```
 
 
+I then ran PERF to test if it works and identifies the microsatellite loci present within the af293 genome. I created a directory for where my bash scripts
+
 ```{bash}
+$ mkdir ~/bash_files ; cd ~/bash_files
+$ nano perf.sh
+
+_______________
 #!/bin/bash
 #SBATCH --account=def-jpxu
-#SBATCH --time=01:15:00
-#SBATCH --cpus-per-task=8
+#SBATCH --time=00:10:00
+#SBATCH --cpus-per-task=6
 #SBATCH —nodes=2
-#SBATCH --mem=30G
+#SBATCH --mem=15G
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
-fasterq-dump --split-files $1
-```
+PERF -input $1 --output $2  --analyse
+_______________________________
 
-Make it an executable
-```{bash}
-chmod +x SRR_fastq.sh
-```
-
-
-A CM21 strain
-```{bash}
-/usr/local/sratoolkit/fastq-dump.2.8.2 --split-files SRR12894203
+$ chmod +x ~/bash_files/perf.sh
 ```
 
 
-Testing the reference strain for Microsats
+The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information shown below (taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md).
 
+| S.No | Column | Description |
+|:----:| ------ | ----------- |
+| 1 | Chromosome | Chromosome or Sequence Name as specified by the first word in the FASTA header |
+| 2 | Repeat Start | 0-based start position of SSR in the Chromosome |
+| 3 | Repeat Stop | End position of SSR in the Chromosome |
+| 4 | Repeat Class | Class of repeat as grouped by their cyclical variations |
+| 5 | Repeat Length | Total length of identified repeat in nt |
+| 6 | Repeat Strand | Strand of SSR based on their cyclical variation |
+| 7 | Motif Number | Number of times the base motif is repeated |
+| 8 | Actual Repeat | Starting sequence of the SSR irrespective of Repeat class and strand|
 
-
-I also tried to identify where each repeat was located. this includes Wheter it was intergenic, or within introns, exons, etc.
-The GFF file with annotation details for af293. Download it from NCBI and unzip it using tar
-This gave me trouble to get it to work. I was not able to identify what was causing the problem. I tried using both GTF and GFF files, however neither worked. most errors appeared as below 
 ```{bash}
-[gk1995@gra-login1 722_project]$ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF gff
+$ ~/bash_files/perf_no_GFF.sh ref_Af293.fa perf_out
+ Using length cutoff of 12
+ Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████  ███████████████████████████████████████████████████| 8/8 [00:16<00:00,  2.05s/it]
+
+ Generating HTML report. This may take a while..
+
+ HTML report successfully saved to perf_out.html
+ 
+$ head perf_out
+NC_007194.1     0       123     AACCCT  123     +       20      CCTAAC
+NC_007194.1     1750    1762    ACAT    12      -       3       TGTA
+NC_007194.1     3815    3827    ATATCC  12      +       2       CATATC
+NC_007194.1     4453    4466    AGCCTG  13      +       2       GAGCCT
+NC_007194.1     5984    5996    AT      12      +       6       TA
+NC_007194.1     11452   11464   AGAGCC  12      -       2       GCTCTG
+NC_007194.1     12317   12332   ACTGCC  15      -       2       TGGCAG
+NC_007194.1     12650   12663   AACGAC  13      -       2       GTCGTT
+NC_007194.1     15208   15220   ACGATG  12      -       2       ATCGTC
+NC_007194.1     17437   17450   AACGC   13      -       2       GTTGC
+```
+
+The HTML files that were generated can be accessed HERE
+
+
+I also tried to identify where each repeat was located, either intergenic, or within introns, exons, etc.
+The GFF and GTF file for af293 was downloaded as it contains annotation details. I Downloaded to my local machine and then I used to mobaxterm terminal to upload it to my sharcnet account. I then unzipped both folders using tar and then unzipped the GTF and GFF files in both folders using gunzip. 
+
+```{bash}
+$ cd ~/722_project
+
+$ tar -xvf genome_assemblies_genome_gff.tar 
+$ gunzip ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff.gz
+$ mv ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff af293.GFF
+
+$ tar -xvf genome_assemblies_genome_gtf.tar 
+$ gunzip ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gtf.gz
+$ mv ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff af293.GTF
+```
+
+I then made a new script that included the annotation file
+```{bash}
+nano perf_anno.sh 
+_________________
+#!/bin/bash
+#SBATCH --account=def-jpxu
+#SBATCH --time=00:10:00
+#SBATCH --cpus-per-task=6
+#SBATCH —nodes=2
+#SBATCH --mem=15G
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+PERF -input $1 --output $2 --anotate $3  --analyse
+_______________________________
+```
+
+This gave me trouble to get it to work. I was not able to identify what was causing the problem. I tried using both GTF and GFF files, however neither worked. when using the GTF file, the erro below occured
+
+```{bash}
+$ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF gtf
 Using length cutoff of 12
 Processing NC_007201.1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.93s/it]
 
@@ -109,10 +141,10 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
 
-A more informative error occured when I ran the GFF file. I updated my script as follows
+A more informative error occured when I ran the GFF file. 
 
 ```{bash}
-[gk1995@gra-login1 722_project]$ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF gff ID
+$ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF
 
 Using length cutoff of 12
 Processing NC_007201.1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.95s/it]
@@ -123,10 +155,10 @@ The available ones are [ID, Name, end_range, gbkey, gene_biotype, locus_tag, old
 
 ```
 
-so I added the --anno-format flag to specify GFF file and the --gene-key flag to specify "ID" shown in the above error and what is seen in the GFF file
+I updated my script as follows. I added the --anno-format flag to specify GFF file and the --gene-key flag to specify "ID" shown in the above error and what is seen in the GFF file. 
 
 ```{bash}
-perf.sh script
+perf_anno.sh script
 
 #!/bin/bash
 #SBATCH --account=def-jpxu
@@ -140,9 +172,10 @@ PERF -input $1 --output $2 --anotate $3 --anno-format $4 --gene-key $5 --analyse
 
 ```
 
-GFF run with ID stated. Results in a error in the PERF script and does not generate the SSR anotation file.
+GFF run with ID stated. Results in a error in the PERF script and does not generate the SSR annotation file. I also tried some of the attributes copied directly from the GFF file, but none of them worked. Each would complete the original SSR call but failed after attempting the annotation. I also could not find a solution online or in the github page. 
+
 ```{bash}
-[gk1995@gra-login1 722_project]$ ~/bash_files/perf.sh ref_Af293.fa GFF_test af293.GFF gff ID
+$ ~/bash_files/perf.sh ref_Af293.fa GFF_test af293.GFF gff ID
 
 Using length cutoff of 12
 Processing NC_007201.1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:14<00:00,  1.85s/it]
@@ -166,18 +199,7 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
 
 
-
-
-I ran the code
-```{bash}
-[gk1995@gra-login1 722_project]$ ~/bash_files/perf.sh ref_Af293.fa GFF_test af293.GFF gff ID
-```
-but after the initial SSR call, a similar error occured
-
-
-Next I tried specifiying the file type and the 
-
-It would have provided me the information below. Table taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md
+If the annotation completed successfully, It would have provided me with the information below. Table taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
@@ -188,12 +210,6 @@ It would have provided me the information below. Table taken from https://raw.gi
 | 13 | Genomic annotation | Annotation of the repeat w.r.t to the gene. Possible annotations are {Genic, Exonic, Intronic, Intergenic} |
 | 14 | Promoter annotation | If repeat falls in the promoter region of the closest gene. The default promoter region is 1Kb upstream and downstream of TSS. |
 | 15 | Distance from TSS | Distance of the repeat from the TSS of the gene. |
-
-```{bash}
-tar -xvf genome_assemblies_genome_gff.tar > af293.GFF
-gunzip ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff.gz
-mv ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff af293.GFF
-```
 
 ```{bash}
 #!/bin/bash
@@ -220,22 +236,4 @@ scp -r gk1995@graham.computecanada.ca:~/722_project/perf_* .
 
 
 
-Obtaining and using perf (reference to paper here)
-This gave me a bit of trouble getting it to work on the cluster
-
-
-
-
-Downloading and preparing the reference genome Af293
-
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/655/GCF_000002655.1_ASM265v1/GCF_000002655.1_ASM265v1_genomic.fna.gz
-
-
-gunzip GCF_000002655.1_ASM265v1_genomic.fna.gz
-For simplicity, the name of this reference fasta file will be changed to Af293.fa
-
-mv GCF_000002655.1_ASM265v1_genomic.fna ref_Af293.fa
-An index file for the reference genome is then made using bwa. This will be done in advance as we will be using BWA-MEM for read alignment later on
-
-bwa index Af293.fa
 
