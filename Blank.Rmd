@@ -5,13 +5,12 @@ README page
 
 
 
-Welcome to my 722 project Github page.
-
-In this project, I used both Brian's Cluster and Sharcnet to conduct my analyses. I jumped between the two as I could not get the PERF program to work from within my home directory. Therefore I moved to Sharcnet to get that aspect of my project done. I detatiled waht PERF does below.
+Welcome to my 722 project Github page. For my project, I looked to identify and investigate microsatellite loci from reference and a lab strain of A.fumigatus
 
 
+In this project, I used Sharcnet to conduct my analyses. I jumped between the two as I could not get the PERF program to work from within my home directory. Therefore I moved to Sharcnet to get that aspect of my project done. I detatiled waht PERF does below.
 
-For my project I decided to investigate all the microsatellite loci from select strains of A.fumigatus
+
 
 
 I downloaded the SRR file 
