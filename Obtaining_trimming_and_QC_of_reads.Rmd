@@ -26,7 +26,7 @@ $ nano ~/bash_files/SSR_fastq.sh
 ______________________
 
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=01:15:00
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=2
@@ -52,7 +52,7 @@ Next I used fastqc to check the raw reads for their quality. I placed the output
 $ nano ~/bash_files/fastqc.sh
 _____________________
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=2
@@ -104,7 +104,7 @@ nano ~/bash_files/trimmo_pair.sh
 ___________________
 
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=00:30:00
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=1

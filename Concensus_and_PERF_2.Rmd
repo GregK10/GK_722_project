@@ -6,10 +6,10 @@ output: html_document
 With the cm21 consensus sequence obtained, I then ran the PERF script to identify the SSR alleles. I used the same bash script I used for af293
  
 ```{bash}
-$ nano
+$ nano ~/bash_files/perf.sh
 
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=00:03:00
 #SBATCH --cpus-per-task=6
 #SBATCH —nodes=2
@@ -21,7 +21,7 @@ PERF --input $1 --output $2 --analyse
  
  
 ```{bash}
-$ ~/bash_files/perf_no_GFF.sh cm21_con.fa cm_perf_con
+$ ~/bash_files/perf.sh cm21_con.fa cm_perf_con
 
 Using length cutoff of 12
 Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.96s/it]
@@ -36,7 +36,7 @@ This generated the html summary report see HERE
 Similar to the run with af293, I was not able to use the annotation file to identify if the SSRs are within annotated locations in the genome.  
 
 ```{bash}
-$ ~/bash_files/perf.sh cm21_con.fa cm_perf_con_GFF af293.GFF gff ID
+$ ~/bash_files/perf_anno.sh cm21_con.fa cm_perf_con_GFF af293.GFF gff ID
 Using length cutoff of 12
 Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.94s/it]
 
@@ -59,7 +59,40 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
  
  
-THis concludes my workflow for this project. I was greatly interested in identifying and comparing the presence and length of SSRs within genic and exonic regions of the genome between different strains. I may need to contact the authors and inquire what may be the issue. 
+Within the html outputs for both strains, I download the csv that details the SSR position and type. I downloaded the file, provided headers and saved it is as a csv.
+
+```{r}
+library(ggplot2)
+cm21 <- read.csv("D:/School/Bio_722/cm21_microsats.csv", header = TRUE)
+head(cm21)
+```
+
+Using the file, I created a ggplot to visualize the SSR density throughout the genome. I used x = end to prevent any issues with the SSR position = 0. I then faceted it by the chromosome. I formatted the graph so it would look nice :)
+
+```{r}
+ggplot(data = cm21, aes(x = end, fill = chromosome)) +
+        geom_histogram(binwidth = 100000) +
+        facet_wrap(vars(chromosome), scales = "free_x") +
+        scale_x_continuous(labels = function(x) format(x/10000)) +
+        xlab("position (10kb)") +
+        theme_classic()
+```
+ 
+now for the same plot script but instead with af293
+```{r}
+af293 <- read.csv("D:/School/Bio_722/af293_microsats.csv", header = TRUE)
+head(af293)
+ggplot(data = af293, aes(x = end, fill = chromosome)) +
+        geom_histogram(binwidth = 100000) +
+        facet_wrap(vars(chromosome), scales = "free_x") +
+        scale_x_continuous(labels = function(x) format(x/10000)) +
+        xlab("position (10kb)") +
+        theme_classic()
+```
+
+As seen in the figure, both strains have similar SSR density throughout their chromosomes.
+ 
+This concludes my work-flow for this project. I was greatly interested in identifying and comparing the presence and length of SSRs within genic and exonic regions of the genome between different strains. I may need to contact the authors and inquire what may be the issue. 
 In the future when I will be using more than one strain, I would modify the scripts to include a for loop for each strain.  
 
 The PERF authors recently updated their scripts, potentially creating a bug for the annotation step. 

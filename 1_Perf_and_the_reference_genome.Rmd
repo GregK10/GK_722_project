@@ -26,12 +26,12 @@ $ gunzip GCF_000002655.1_ASM265v1_genomic.fna.gz ; mv GCF_000002655.1_ASM265v1_g
 I then ran PERF to test if it works and identifies the microsatellite loci present within the af293 genome. I created a directory for where my bash scripts
 
 ```{bash}
-$ mkdir ~/bash_files ; cd ~/bash_files
-$ nano perf.sh
+$ mkdir ~/bash_files 
+$ nano ~/bash_files/perf.sh
 
 _______________
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=00:10:00
 #SBATCH --cpus-per-task=6
 #SBATCH —nodes=2
@@ -61,7 +61,7 @@ The script will take the input file (reference genome) and output in a filename 
 Below is bash script and the output of the run.
 
 ```{bash}
-$ ~/bash_files/perf_no_GFF.sh ref_Af293.fa perf_out
+$ ~/bash_files/perf.sh ref_Af293.fa perf_out
 
  Using length cutoff of 12
  Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████  ███████████████████████████████████████████████████| 8/8 [00:16<00:00,  2.05s/it]
@@ -104,10 +104,10 @@ $ mv ncbi-genomes-2021-04-28/GCA_000002655.1_ASM265v1_genomic.gff af293.GTF
 
 I then made a new script that included the annotation file
 ```{bash}
-nano perf_anno.sh 
+nano ~/bash_files/perf_anno.sh 
 _________________
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=00:10:00
 #SBATCH --cpus-per-task=6
 #SBATCH —nodes=2
@@ -121,7 +121,7 @@ _______________________________
 Unfortunately, this gave me trouble to get it to work. After trouble shooting, I was not able to identify what was causing the problem. I tried using both GTF and GFF files, however neither worked. When using the GTF file, the error below occurred
 
 ```{bash}
-$ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF gtf
+$ ~/bash_files/perf_anno.sh ref_Af293.fa GTF_test af293.GFF gtf
 Using length cutoff of 12
 Processing NC_007201.1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.93s/it]
 
@@ -145,7 +145,7 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 When using a GFF file, a more informative error occurred. 
 
 ```{bash}
-$ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF
+$ ~/bash_files/perf_anno.sh ref_Af293.fa GTF_test af293.GFF
 
 Using length cutoff of 12
 Processing NC_007201.1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.95s/it]
@@ -159,10 +159,10 @@ The available ones are [ID, Name, end_range, gbkey, gene_biotype, locus_tag, old
 To try to appeases the error, I updated my script as follows. I added the --anno-format flag to specify GFF file and the --gene-key flag to specify "ID" shown in the above error and what is seen in the GFF file. 
 
 ```{bash}
-perf_anno.sh script
+nano ~/bash_files/perf_anno.sh
 
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=00:10:00
 #SBATCH --cpus-per-task=6
 #SBATCH —nodes=2
@@ -177,7 +177,7 @@ unfortunately again, the GFF run with ID stated resulted in a error in the PERF 
 Attributes I used included: Name, "Name", "ID, ID=gene, gene, "gene".
 
 ```{bash}
-$ ~/bash_files/perf.sh ref_Af293.fa GFF_test af293.GFF gff ID
+$ ~/bash_files/perf_anno.sh ref_Af293.fa GFF_test af293.GFF gff ID
 
 Using length cutoff of 12
 Processing NC_007201.1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:14<00:00,  1.85s/it]

@@ -9,8 +9,10 @@ First, the reference genome is indexed so it can ran by bwa mem. I have included
 
 
 ```{bash}
+$ nano ~/bash_files/bwa.sh
+
 #!/bin/bash
-#SBATCH --account=def-jpxu
+#SBATCH --account=######
 #SBATCH --time=1:30:00
 #SBATCH --cpus-per-task=16
 #SBATCH --nodes=2
@@ -69,8 +71,27 @@ $ more cm21.markdup_mstats.txt
 With the summary text looking good as all reads passed, I then alligned the cm21 gennome to the af293 genome to generate a consensus fasta file. I used the ```vcf-consensus``` command from vcftools to create the consensus sequence and then converted it to a fasta file. PERF requires either fasta for fastq files for the script to run.
 
 ```{bash}
-cat ~/722_project/ref_Af293.fa | vcf-consensus cm21SNPs.vcf.gz > cm21_con.fa
+$ cat ~/722_project/ref_Af293.fa | vcf-consensus cm21SNPs.vcf.gz > cm21_con.fa
+$ head -n 5 cm21_con.fa
+
+>NC_007194.1 Aspergillus fumigatus Af293 chromosome 1, whole genome shotgun sequence
+cctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaac
+cctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaac
+ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
 ```
 
-Next up, I will run PERF on the cm21 genome. Click here to continue.
+The name is still incorrect as I forgot to incorporate the ```bwa mem -R``` flag to tell tell program to rename head to cm21 To fix this issue, I used the ```sed``` command below
 
+```{bash}
+$ sed -i 's/Af293/cm21/g' cm21_con.fa
+$ head -n 5 cm21_con.fa
+
+>NC_007194.1 Aspergillus fumigatus cm21 chromosome 1, whole genome shotgun sequence
+cctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaac
+cctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaac
+ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
+TGGTTCTTGGAACGACATTGTTCTCACCTAGTGTGATGAGCGTTCGTCAAGTTCCAAAGC
+```
+
+
+Next up, I will run PERF on the cm21 genome. Click here to continue.
