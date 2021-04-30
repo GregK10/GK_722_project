@@ -44,7 +44,7 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 PERF -input $1 --output $2  --analyse
 _______________________________
 
-$ chmod +x ~/bash_files/perf.sh
+$ chmod +x ~/bash_files/perf.sh # I only included this once as it has to be done for every script i created
 ```
 
 
@@ -210,6 +210,14 @@ If the annotation completed successfully, It would have provided me with the inf
 | 13 | Genomic annotation | Annotation of the repeat w.r.t to the gene. Possible annotations are {Genic, Exonic, Intronic, Intergenic} |
 | 14 | Promoter annotation | If repeat falls in the promoter region of the closest gene. The default promoter region is 1Kb upstream and downstream of TSS. |
 | 15 | Distance from TSS | Distance of the repeat from the TSS of the gene. |
+
+
+
+
+
+
+
+
 
 ```{bash}
 #!/bin/bash
