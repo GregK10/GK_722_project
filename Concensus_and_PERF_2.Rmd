@@ -91,8 +91,37 @@ ggplot(data = af293, aes(x = end, fill = chromosome)) +
 ```
 
 As seen in the figure, both strains have similar SSR density throughout their chromosomes.
+
+I can also filter the rows so that specific SSR repeats lengths are selected. Here is an example for repeats that are lengths = 4 for af293.
+
+```{r}
+library(dplyr)
+ssr3_af293 <- dplyr::filter(af293, nchar(af293$repeat.) == 4)
+head(ssr3_af293)
+ggplot(data = ssr3_af293, aes(x = end, fill = chromosome)) +
+        geom_histogram(binwidth = 100000) +
+        facet_wrap(vars(chromosome), scales = "free_x") +
+        scale_x_continuous(labels = function(x) format(x/10000)) +
+        xlab("position (10kb)") +
+        theme_classic()
+```
  
-This concludes my work-flow for this project. I was greatly interested in identifying and comparing the presence and length of SSRs within genic and exonic regions of the genome between different strains. I may need to contact the authors and inquire what may be the issue. 
+```{r}
+library(dplyr)
+ssr3_cm21 <- dplyr::filter(cm21, nchar(cm21$repeat.) == 4)
+head(ssr3_cm21)
+ggplot(data = ssr3_cm21, aes(x = end, fill = chromosome)) +
+        geom_histogram(binwidth = 100000) +
+        facet_wrap(vars(chromosome), scales = "free_x") +
+        scale_x_continuous(labels = function(x) format(x/10000)) +
+        xlab("position (10kb)") +
+        theme_classic()
+``` 
+ 
+ 
+This concludes my work-flow for this project. I was greatly interested in identifying and comparing the presence and length of SSRs within intronic, exonic and promoter regions of the genome between different strains. I may need to contact the authors and inquire what may be the issue. 
 In the future when I will be using more than one strain, I would modify the scripts to include a for loop for each strain.  
 
 The PERF authors recently updated their scripts, potentially creating a bug for the annotation step. 
+
+Thank you for viewing my project. To go back to the readme file, click HERE.
