@@ -92,7 +92,7 @@ ggplot(data = af293, aes(x = end, fill = chromosome)) +
 
 As seen in the figure, both strains have similar SSR density throughout their chromosomes.
 
-I can also filter the rows so that specific SSR repeats lengths are selected. Here is an example for repeats that are lengths = 4 for af293.
+I can also filter the rows so that specific SSR repeats lengths are selected. Here is an example for repeats that are lengths = 4 for Af293.
 
 ```{r}
 library(dplyr)
@@ -105,7 +105,7 @@ ggplot(data = ssr3_af293, aes(x = end, fill = chromosome)) +
         xlab("position (10kb)") +
         theme_classic()
 ```
- 
+And here is an example for repeats that are lengths = 4 for CM21.
 ```{r}
 library(dplyr)
 ssr3_cm21 <- dplyr::filter(cm21, nchar(cm21$repeat.) == 4)
