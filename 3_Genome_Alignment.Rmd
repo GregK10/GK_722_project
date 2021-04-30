@@ -5,7 +5,7 @@ output: html_document
 
 Next up, we want to align the cm21 genome to the af293 reference genome. I will be using bwa for aligning
 
-First, the reference genome is indexed so it can by bwa mem. I have included that within the bash script. It should be done separately as it may take some time.
+First, the reference genome is indexed so it can ran by bwa mem. I have included ```bwa index``` into my bash script for simplicity, however, it should be run separately as multiple index runs are not needed.
 
 
 ```{bash}
@@ -45,6 +45,32 @@ sacct -j $SLURM_JOB_ID --format=JobID%16,Submit,Start,Elapsed,NCPUS,ExitCode,Nod
 
 Instead of the java line, I attempted to use samtools markdup. This command requires samtool fixmate to be run prior, but I was unable to get it to work with my data. I therefore elected to use picard to mark dupicates
 
+I then checked how well the cm21 reads mapped to the af293 reference genome by viewing the ```cm21.markdup_mstats.txt``` file
+
+```{bash}
+$ more cm21.markdup_mstats.txt
+
+6818907 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+25187 + 0 supplementary
+162338 + 0 duplicates
+6084343 + 0 mapped (89.23% : N/A)
+6793720 + 0 paired in sequencing
+3396860 + 0 read1
+3396860 + 0 read2
+5921452 + 0 properly paired (87.16% : N/A)
+6022446 + 0 with itself and mate mapped
+36710 + 0 singletons (0.54% : N/A)
+78774 + 0 with mate mapped to a different chr
+54096 + 0 with mate mapped to a different chr (mapQ>=5)
+
+```
+
+With the summary text looking good as all reads passed, I then alligned the cm21 gennome to the af293 genome to generate a consensus fasta file. I used the ```vcf-consensus``` command from vcftools to create the consensus sequence and then converted it to a fasta file. PERF requires either fasta for fastq files for the script to run.
+
 ```{bash}
 cat ~/722_project/ref_Af293.fa | vcf-consensus cm21SNPs.vcf.gz > cm21_con.fa
 ```
+
+Next up, I will run PERF on the cm21 genome. Click here to continue.
+

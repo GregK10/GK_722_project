@@ -3,8 +3,7 @@ title: "Perf and the reference genome"
 output: html_document
 ---
 
-
-
+For the first part of my project, I tested the algorithm PERF on the A. fumigatus reference strain af293. PERF is a recently developed to identify microsatellite alleles from DNA sequences.
 
 Installing the dependencies required for PERF to run
 ```{bash}
@@ -46,7 +45,7 @@ $ chmod +x ~/bash_files/perf.sh # I only included this once as it has to be done
 ```
 
 
-The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information shown below (taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md).
+The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information shown in fasta format below (taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md). The output can be specified in fastq format as well.
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
@@ -59,8 +58,11 @@ The script will take the input file (reference genome) and output in a filename 
 | 7 | Motif Number | Number of times the base motif is repeated |
 | 8 | Actual Repeat | Starting sequence of the SSR irrespective of Repeat class and strand|
 
+Below is bash script and the output of the run.
+
 ```{bash}
 $ ~/bash_files/perf_no_GFF.sh ref_Af293.fa perf_out
+
  Using length cutoff of 12
  Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████  ███████████████████████████████████████████████████| 8/8 [00:16<00:00,  2.05s/it]
 
@@ -80,12 +82,13 @@ NC_007194.1     12650   12663   AACGAC  13      -       2       GTCGTT
 NC_007194.1     15208   15220   ACGATG  12      -       2       ATCGTC
 NC_007194.1     17437   17450   AACGC   13      -       2       GTTGC
 ```
+As you can see above, there are many hexamer repeats that are two repeats long. These repeat types are very common in the genomes 
+
 
 The HTML files that were generated can be accessed HERE
 
 
-I also tried to identify where each repeat was located, either intergenic, or within introns, exons, etc.
-The GFF and GTF file for af293 was downloaded as it contains annotation details. I Downloaded to my local machine and then I used to mobaxterm terminal to upload it to my sharcnet account. I then unzipped both folders using tar and then unzipped the GTF and GFF files in both folders using gunzip. 
+I also tried to identify where each repeat was located, either intergenic, or within introns or exons. The ```--annotate``` flag requires a gene annotation file in either GFF or GTF format. Therefore, The GFF and GTF file for af293 was downloaded. For simplicity, I downloaded the files to my local machine and then I used to mobaxterm terminal to upload it to my sharcnet account. I then unzipped both folders using tar and then unzipped the GTF and GFF files in both folders using gunzip. 
 
 ```{bash}
 $ cd ~/722_project
@@ -115,7 +118,7 @@ PERF -input $1 --output $2 --anotate $3  --analyse
 _______________________________
 ```
 
-This gave me trouble to get it to work. I was not able to identify what was causing the problem. I tried using both GTF and GFF files, however neither worked. when using the GTF file, the erro below occured
+Unfortunately, this gave me trouble to get it to work. After trouble shooting, I was not able to identify what was causing the problem. I tried using both GTF and GFF files, however neither worked. When using the GTF file, the error below occurred
 
 ```{bash}
 $ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF gtf
@@ -139,7 +142,7 @@ Traceback (most recent call last):
 UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
 
-A more informative error occured when I ran the GFF file. 
+When using a GFF file, a more informative error occurred. 
 
 ```{bash}
 $ ~/bash_files/perf.sh ref_Af293.fa GTF_test af293.GFF
@@ -153,7 +156,7 @@ The available ones are [ID, Name, end_range, gbkey, gene_biotype, locus_tag, old
 
 ```
 
-I updated my script as follows. I added the --anno-format flag to specify GFF file and the --gene-key flag to specify "ID" shown in the above error and what is seen in the GFF file. 
+To try to appeases the error, I updated my script as follows. I added the --anno-format flag to specify GFF file and the --gene-key flag to specify "ID" shown in the above error and what is seen in the GFF file. 
 
 ```{bash}
 perf_anno.sh script
@@ -170,7 +173,8 @@ PERF -input $1 --output $2 --anotate $3 --anno-format $4 --gene-key $5 --analyse
 
 ```
 
-GFF run with ID stated. Results in a error in the PERF script and does not generate the SSR annotation file. I also tried some of the attributes copied directly from the GFF file, but none of them worked. Each would complete the original SSR call but failed after attempting the annotation. I also could not find a solution online or in the github page. 
+unfortunately again, the GFF run with ID stated resulted in a error in the PERF script and did not generate the SSR annotation file. I also tried some of the attributes copied directly from the GFF file, but none of them worked. Each would complete the original SSR call but failed after attempting the annotation. I also could not find a solution online or in the github page. I also tried attributes I found in the GTF file as well.
+Attributes I used included: Name, "Name", "ID, ID=gene, gene, "gene".
 
 ```{bash}
 $ ~/bash_files/perf.sh ref_Af293.fa GFF_test af293.GFF gff ID
@@ -197,7 +201,7 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
 
 
-If the annotation completed successfully, It would have provided me with the information below. Table taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md
+If the annotation completed successfully, It would have provided me with the information below. I would have used the information generated to identify where the microsatellites were located and compare the differences between strains. Table taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
@@ -210,39 +214,6 @@ If the annotation completed successfully, It would have provided me with the inf
 | 15 | Distance from TSS | Distance of the repeat from the TSS of the gene. |
 
 
-
-
-
-
-
-
-
-
-
-
-Junk stuff
-
-```{bash}
-#!/bin/bash
-#SBATCH --account=def-jpxu
-#SBATCH --time=00:03:00
-#SBATCH --cpus-per-task=6
-#SBATCH —nodes=2
-#SBATCH --mem=15G
-export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-
-PERF --input $1 --output $2 --anotate $3 --analyse 
-
-```
-```{bash}
-~/bash_files/perf.sh ref_Af293.fa perf_af293_12 af293.GFF
-```
-
-
-```{bash}
-scp -r gk1995@graham.computecanada.ca:~/722_project/perf_* .
-```
-
-
+Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click here to continue.
 
 

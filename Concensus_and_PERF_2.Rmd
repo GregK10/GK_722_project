@@ -3,9 +3,63 @@ title: "Concensus_and_PERF_2"
 output: html_document
 ---
  
+With the cm21 consensus sequence obtained, I then ran the PERF script to identify the SSR alleles. I used the same bash script I used for af293
+ 
+```{bash}
+$ nano
+
+#!/bin/bash
+#SBATCH --account=def-jpxu
+#SBATCH --time=00:03:00
+#SBATCH --cpus-per-task=6
+#SBATCH —nodes=2
+#SBATCH --mem=15G
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+PERF --input $1 --output $2 --analyse 
+```
  
  
+```{bash}
+$ ~/bash_files/perf_no_GFF.sh cm21_con.fa cm_perf_con
+
+Using length cutoff of 12
+Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.96s/it]
+
+Generating HTML report. This may take a while..
+
+HTML report successfully saved to cm_perf_con_v2.html
+```
+
+This generated the html summary report see HERE
+
+Similar to the run with af293, I was not able to use the annotation file to identify if the SSRs are within annotated locations in the genome.  
+
+```{bash}
+$ ~/bash_files/perf.sh cm21_con.fa cm_perf_con_GFF af293.GFF gff ID
+Using length cutoff of 12
+Processing NC_007201.1: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 8/8 [00:15<00:00,  1.94s/it]
+
+Generating annotations for identified repeats..
+
+  0%|                                                                                                                                                                                  | 0/20990 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/gk1995/.local/bin/PERF", line 8, in <module>
+    sys.exit(main())
+  File "/home/gk1995/.local/lib/python3.8/site-packages/PERF/core.py", line 162, in main
+    ssr_native(args, length_cutoff=args.min_length)
+  File "/home/gk1995/.local/lib/python3.8/site-packages/PERF/core.py", line 106, in ssr_native
+    fasta_ssrs(args, repeats_info)
+  File "/home/gk1995/.local/lib/python3.8/site-packages/PERF/rep_utils.py", line 253, in fasta_ssrs
+    annotate(args)
+  File "/home/gk1995/.local/lib/python3.8/site-packages/PERF/annotation.py", line 291, in annotate
+    minStartIndex += minIndex
+UnboundLocalError: local variable 'minIndex' referenced before assignment
+
+```
  
  
- 
- THe PERF authors recently updated their scripts, potentially creating a bug for the annotation step. 
+THis concludes my workflow for this project. I was greatly interested in identifying and comparing the presence and length of SSRs within genic and exonic regions of the genome between different strains. I may need to contact the authors and inquire what may be the issue. 
+In the future when I will be using more than one strain, I would modify the scripts to include a for loop for each strain.  
+
+The PERF authors recently updated their scripts, potentially creating a bug for the annotation step. 

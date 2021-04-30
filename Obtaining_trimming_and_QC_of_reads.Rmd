@@ -4,7 +4,7 @@ output: html_document
 ---
 
 With PERF capable to identify the microsatellites within the A.fumimgatus reference genome, I wanted to conduct test PERF with a genome constructed from raw reads.
-Therefore, I have obtained the raw reads of CM21, a A. fumigatus strains obtained by my lab. The raw reads were obtained from NCBI and uploaded to Sharcnet.
+Therefore, I have obtained the raw reads of CM21, a A. fumigatus strains obtained by my lab. The raw reads were obtained from NCBI and uploaded to Sharcnet. As these files are large and are not required after the run is finished, I created a scratch directory to store them. I also renamed the SSR for cm21 file to SRR_cm21.
 
 ```{bash}
 $ mkdir ~/scratch/reads ; cd ~/scratch/reads
@@ -84,12 +84,22 @@ The multiqc html report is found HERE
 
 ## Trimming the raw reads
 
-The reads appear to be trimmed for cm21. However, just in case I will run trimmomatic. It would be useful to incoprate trimming into the pipeline if additional strains are used. As trimmomatic in Sharcnet is used quite often, I added addition commands and code to view the progress of the script. 
+The reads appear to be trimmed for cm21. However, just in case I will run trimmomatic. It would be useful to incorperate trimming into the pipeline if additional strains are used. As trimmomatic in Sharcnet is used quite often, I added addition commands and code to view the progress of the script. 
+
+In this run I used the illumina adapters below. The correct adpaters need to be identified if raw reads were used
 
 
 ```{bash}
 $ mkdir trimmed_reads
 $ cd trimmed_reads/
+
+# the adapter seqeunces
+$ nano trimmed_reads/TruSeq3-PE.fa
+>PrefixPE/1
+TACACTCTTTCCCTACACGACGCTCTTCCGATCT
+>PrefixPE/2
+GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT
+
 nano ~/bash_files/trimmo_pair.sh
 ___________________
 
