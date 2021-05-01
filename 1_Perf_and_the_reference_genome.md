@@ -213,6 +213,6 @@ If the annotation completed successfully, It would have provided me with the inf
 | 15 | Distance from TSS | Distance of the repeat from the TSS of the gene. |
 
 
-### Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click [HERE](https://github.com/GregK10/GK_722_project/blob/main/2_Obtaining_trimming_and_QC_of_reads.Rmd) to continue.
+### Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click [HERE](https://github.com/GregK10/GK_722_project/blob/main/2_Obtaining_trimming_and_QC_of_reads.md) to continue.
 
 
