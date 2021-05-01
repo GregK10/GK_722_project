@@ -79,7 +79,7 @@ cctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaac
 ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
 ```
 
-The name is still incorrect as I forgot to incorporate the ```bwa mem -R``` flag to tell tell program to rename head to cm21 To fix this issue, I used the ```sed``` command below
+The name is still incorrect as I forgot to incorporate the ```bwa mem -R``` flag to tell tell program to rename head to cm21. To fix this issue, I used the ```sed``` command below
 
 ```{bash}
 $ sed -i 's/Af293/cm21/g' cm21_con.fa
