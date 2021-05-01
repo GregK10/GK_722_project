@@ -103,7 +103,7 @@ ___________________
 
 #!/bin/bash
 #SBATCH --account=######
-#SBATCH --time=00:30:00
+#SBATCH --time=00:15:00
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=1
 #SBATCH --mem=15G
@@ -133,9 +133,10 @@ $ multiqc ~/scratch/trimmed_fastqc_outputs/
 
 ```
 
-multiqc html report is found [HERE](
+multiqc html report is found [HERE](https://rpubs.com/Greg1995/CM21_multiqc_trimmed)
+Everything looks good. There are still no adapter sequences
 
-
+## To start alingning the CM21 Genome, Click [HERE](https://github.com/GregK10/GK_722_project/blob/main/3_Genome_Alignment_and_Consensus.md)
 
 
 
