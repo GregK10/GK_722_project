@@ -29,7 +29,7 @@ Generating HTML report. This may take a while..
 HTML report successfully saved to cm_perf_con_v2.html
 ```
 
-This generated the html summary report see [HERE](https://rpubs.com/Greg1995/CM21_PERF)
+#### This generated the html summary report see [HERE](https://rpubs.com/Greg1995/CM21_PERF)
 
 Similar to the run with af293, I was not able to use the annotation file to identify if the SSRs are within annotated locations in the genome.  
 
@@ -57,7 +57,7 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
 ## Plotting Results in R with ggplot
 
-Within the html outputs for both strains, there was on option to download the csv that details the SSR position and type. I downloaded the file, provided headers and saved it is as a csv.
+Within the SSR html outputs for both Af293 and CM21, there was on option to download the csv that details the SSR position and type. I downloaded the file, provided headers and saved it is as a csv.
 
 ```{r}
 library(ggplot2)
@@ -76,7 +76,7 @@ ggplot(data = cm21, aes(x = end, fill = chromosome)) +
         theme_classic()
 ```
  
-Now for the same plot script but instead with af293
+Now for the same plot  but instead with af293
 ```{r}
 af293 <- read.csv("D:/School/Bio_722/af293_microsats.csv", header = TRUE)
 head(af293)
@@ -88,7 +88,7 @@ ggplot(data = af293, aes(x = end, fill = chromosome)) +
         theme_classic()
 ```
 
-As seen in the figure, both strains have similar SSR density throughout their chromosomes.
+As seen in the figure shown in my report document, both strains have similar SSR density throughout their chromosomes.
 
 I can also filter the rows so that specific SSR repeats lengths are selected. Here is an example for repeats that are lengths = 4 for Af293.
 
