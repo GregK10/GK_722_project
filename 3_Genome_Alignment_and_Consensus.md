@@ -4,7 +4,7 @@ Want to go back to [obtaining trimming and QC of reads?](https://github.com/Greg
 
 Next up, we want to align the cm21 genome to the af293 reference genome. I will be using bwa for aligning
 
-First, the reference genome is indexed so it can ran by bwa mem. I have included ```bwa index``` into my bash script for simplicity, however, it should be run separately as multiple index runs are not needed.
+First, the reference genome is indexed so it can ran by ```bwa mem```. I have included ```bwa index``` into my bash script for simplicity, however, it should be run separately as multiple index runs are not needed.
 
 ```{bash}
 $ nano ~/bash_files/bwa.sh
@@ -43,9 +43,9 @@ sacct -j $SLURM_JOB_ID --format=JobID%16,Submit,Start,Elapsed,NCPUS,ExitCode,Nod
 
 ```
 
-Instead of the java line, I attempted to use samtools markdup. This command requires samtool fixmate to be run prior, but I was unable to get it to work with my data. I therefore elected to use picard to mark dupicates
+Instead of the java line that was used to mark duplicates, I initally attempted to use samtools markdup. This command requires samtool fixmate to be run prior, but I was unable to get it to work with my data. I therefore elected to the Picard command to mark dupicates instead
 
-I then checked how well the cm21 reads mapped to the af293 reference genome by viewing the ```cm21.markdup_mstats.txt``` file
+I then checked how well the cm21 reads mapped to the Af293 reference genome by viewing the ```cm21.markdup_mstats.txt``` file
 
 ```{bash}
 $ more cm21.markdup_mstats.txt
@@ -79,7 +79,7 @@ cctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaaccctaac
 ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
 ```
 
-The name is still incorrect as I forgot to incorporate the ```bwa mem -R``` flag to tell tell program to rename head to cm21. To fix this issue, I used the ```sed``` command below
+The name is still incorrect as I forgot to incorporate the ```bwa mem -R``` flag to tell the ```bwa mem``` to rename head of the file to cm21. To fix this issue, I used the ```sed``` command below to replace Af293 with cm21
 
 ```{bash}
 $ sed -i 's/Af293/cm21/g' cm21_con.fa
