@@ -202,7 +202,7 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 ```
 
 
-If the annotation completed successfully, It would have provided me with the information below. I would have used the information generated to identify where the microsatellites were located and compare the differences between strains. Table taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md
+If the annotation completed successfully, It would have provided me with the information below. I would have used the information generated to identify where the microsatellites were located and compare the differences between strains. Table taken from [Perf GitHub](https://raw.githubusercontent.com/RKMlab/perf/master/README.md))
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
@@ -215,6 +215,6 @@ If the annotation completed successfully, It would have provided me with the inf
 | 15 | Distance from TSS | Distance of the repeat from the TSS of the gene. |
 
 
-Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click here to continue.
+### Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click here to continue.
 
 
