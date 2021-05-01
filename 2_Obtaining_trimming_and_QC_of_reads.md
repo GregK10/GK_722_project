@@ -1,10 +1,9 @@
----
-title: "Obtaining_trimming_and_QC_of_reads"
-output: html_document
----
+[Go back to the intial run of PERF](https://github.com/GregK10/GK_722_project/blob/main/1_Perf_and_the_reference_genome.md)
+
+## Download and Qualtity check of raw reads
 
 With PERF capable to identify the microsatellites within the A.fumimgatus reference genome, I wanted to conduct test PERF with a genome constructed from raw reads.
-Therefore, I have obtained the raw reads of CM21, a A. fumigatus strains obtained by my lab. The raw reads were obtained from NCBI and uploaded to Sharcnet. As these files are large and are not required after the run is finished, I created a scratch directory to store them. I also renamed the SSR for cm21 file to SRR_cm21.
+Therefore, I have obtained the raw reads of CM21, a _A. fumigatus strains_ obtained by my lab. The raw reads were obtained from NCBI and uploaded to Sharcnet. As these files are large and are not required after the run is finished, I created a scratch directory to store them. I also renamed the SSR for cm21 file to SRR_cm21.
 
 ```{bash}
 $ mkdir ~/scratch/reads ; cd ~/scratch/reads
@@ -16,7 +15,6 @@ $ module load sra-toolkit/2.10.8
 $ mv SRR12894203 SRR_cm21
  
 ```
- 
  
 First the SSR needs to be converted into a fastq files. As paired end were, i used the ```--split-files``` flag. The newly created fastq files were placed in my scratch directory.
 
@@ -80,7 +78,7 @@ drwxr-x--- 2 gk1995 gk1995   33280 Apr 29 14:10 multiqc_data
 -rw-r----- 1 gk1995 gk1995 1152757 Apr 29 14:10 multiqc_report.html
 drwxr-x--- 2 gk1995 gk1995   33280 Apr 29 13:52 reads
 ```
-The multiqc html report is found HERE
+The multiqc html report is found [HERE](https://rpubs.com/Greg1995/multiqc_cm21_raw)
 
 ## Trimming the raw reads
 
@@ -135,7 +133,7 @@ $ multiqc ~/scratch/trimmed_fastqc_outputs/
 
 ```
 
-multiqc html report is found here
+multiqc html report is found [HERE](
 
 
 
