@@ -1,7 +1,5 @@
----
-title: "Concensus_and_PERF_2"
-output: html_document
----
+Go back to [Genome Alignment and Consensus](https://github.com/GregK10/GK_722_project/blob/main/2_Genome_Alignment_and_Consensus.md)
+
 ## Running PERF with CM21
 With the cm21 consensus sequence obtained, I then ran the PERF script to identify the SSR alleles. I used the same bash script I used for af293
  
@@ -124,4 +122,4 @@ In the future when I will be using more than one strain, I would modify the scri
 
 The PERF authors recently updated their scripts, potentially creating a bug for the annotation step. 
 
-Thank you for viewing my project. To go back to the readme file, click HERE.
+#### Thank you for viewing my project. To go back to the readme file, click [HERE](https://github.com/GregK10/GK_722_project/blob/main/0_README.md).
