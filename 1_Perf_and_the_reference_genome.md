@@ -2,6 +2,7 @@
 title: "Perf and the reference genome"
 output: html_document
 ---
+## Initial run of PERF
 
 For the first part of my project, I tested the algorithm PERF on the A. fumigatus reference strain af293. PERF is a recently developed to identify microsatellite alleles from DNA sequences.
 
@@ -85,7 +86,7 @@ NC_007194.1     17437   17450   AACGC   13      -       2       GTTGC
 As you can see above, there are many hexamer repeats that are two repeats long. These repeat types are very common in the genomes 
 
 
-The HTML files that were generated can be accessed [HERE](https://rpubs.com/Greg1995/Af293)
+### The HTML files that were generated can be accessed [HERE](https://rpubs.com/Greg1995/Af293)
 
 
 I also tried to identify where each repeat was located, either intergenic, or within introns or exons. The ```--annotate``` flag requires a gene annotation file in either GFF or GTF format. Therefore, The GFF and GTF file for af293 was downloaded. For simplicity, I downloaded the files to my local machine and then I used to mobaxterm terminal to upload it to my sharcnet account. I then unzipped both folders using tar and then unzipped the GTF and GFF files in both folders using gunzip. 
