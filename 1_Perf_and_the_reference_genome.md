@@ -2,9 +2,9 @@ Accidently went to far? Click [HERE](https://github.com/GregK10/GK_722_project/b
 
 ## Initial run of PERF
 
-For the first part of my project, I tested the algorithm PERF on the A. fumigatus reference strain af293. PERF is a recently developed to identify microsatellite alleles from DNA sequences.
+For the first part of my project, I tested the algorithm PERF on the_ A. fumigatus_ reference strain Af293. PERF is a recently developed algorith that identifies SSR motifs from within DNA sequences.
 
-Installing the dependencies required for PERF to run
+I needed to install the dependencies required for PERF to run.
 ```{bash}
 $ mkdir 722_project ; cd 722_project/
 $ module load python/3
@@ -15,14 +15,13 @@ $ pip install perf_ssr
 ```
 
 
-Next, I downloaded the reference genome for A. fumigatus. The strain ID is af293
+Next, I downloaded the reference genome for _A. fumigatus_, Af293
 ```{bash}
 $ wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/655/GCF_000002655.1_ASM265v1/GCF_000002655.1_ASM265v1_genomic.fna.gz
 $ gunzip GCF_000002655.1_ASM265v1_genomic.fna.gz ; mv GCF_000002655.1_ASM265v1_genomic.fna.gz ref_af293.fa
 ```
 
-
-I then ran PERF to test if it works and identifies the microsatellite loci present within the af293 genome. I created a directory for where my bash scripts
+I then ran PERF to test if it works and identifies the microsatellite loci present within the Af293 genome. I created a directory for where my bash scripts
 
 ```{bash}
 $ mkdir ~/bash_files 
@@ -44,7 +43,7 @@ $ chmod +x ~/bash_files/perf.sh # I only included this once as it has to be done
 ```
 
 
-The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information shown in fasta format below (taken from [Perf GitHub](https://raw.githubusercontent.com/RKMlab/perf/master/README.md)). The output can be specified in fastq format as well.
+The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information created by PERF in fasta format. The table below decribes the data generated (taken from [Perf GitHub](https://raw.githubusercontent.com/RKMlab/perf/master/README.md)). The output can be specified in fastq format as well.
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
@@ -81,13 +80,13 @@ NC_007194.1     12650   12663   AACGAC  13      -       2       GTCGTT
 NC_007194.1     15208   15220   ACGATG  12      -       2       ATCGTC
 NC_007194.1     17437   17450   AACGC   13      -       2       GTTGC
 ```
-As you can see above, there are many hexamer repeats that are two repeats long. These repeat types are very common in the genomes 
+As you can see above, there are many hexamer repeats that are two repeats long. These repeat types are very common within the Af293 genome.
 
 
 ### The HTML files that were generated can be accessed [HERE](https://rpubs.com/Greg1995/Af293)
 
 
-I also tried to identify where each repeat was located, either intergenic, or within introns or exons. The ```--annotate``` flag requires a gene annotation file in either GFF or GTF format. Therefore, The GFF and GTF file for af293 was downloaded. For simplicity, I downloaded the files to my local machine and then I used to mobaxterm terminal to upload it to my sharcnet account. I then unzipped both folders using tar and then unzipped the GTF and GFF files in both folders using gunzip. 
+I also tried to identify where each repeat was located, either intergenic, or within introns or exons. The ```--annotate``` flag requires a gene annotation file in either GFF or GTF format. Therefore, the GFF and GTF file for Af293 was downloaded. For simplicity, I downloaded the files to my local machine and then I used to mobaxterm terminal to upload it to my Sharcnet account. I then unzipped both folders using tar and then unzipped the GTF and GFF files in both folders using gunzip. 
 
 ```{bash}
 $ cd ~/722_project
@@ -172,7 +171,7 @@ PERF -input $1 --output $2 --anotate $3 --anno-format $4 --gene-key $5 --analyse
 
 ```
 
-unfortunately again, the GFF run with ID stated resulted in a error in the PERF script and did not generate the SSR annotation file. I also tried some of the attributes copied directly from the GFF file, but none of them worked. Each would complete the original SSR call but failed after attempting the annotation. I also could not find a solution online or in the github page. I also tried attributes I found in the GTF file as well.
+Unfortunately again, the GFF run with ID stated resulted in a error in the PERF script and did not generate the SSR annotation file. I also tried some of the attributes copied directly from the GFF file, but none of them worked. Each would complete the original SSR call but failed after attempting the annotation. I also could not find a solution online or in the github page. I also tried attributes I found in the GTF file as well.
 Attributes I used included: Name, "Name", "ID, ID=gene, gene, "gene".
 
 ```{bash}
@@ -199,8 +198,7 @@ UnboundLocalError: local variable 'minIndex' referenced before assignment
 
 ```
 
-
-If the annotation completed successfully, It would have provided me with the information below. I would have used the information generated to identify where the microsatellites were located and compare the differences between strains. Table taken from [Perf GitHub](https://raw.githubusercontent.com/RKMlab/perf/master/README.md))
+If the annotation completed successfully, It would have provided me with the information in the table below. I would have used the information generated to identify where the microsatellites were located and compare the differences between strains. Table taken from [Perf GitHub](https://raw.githubusercontent.com/RKMlab/perf/master/README.md))
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
