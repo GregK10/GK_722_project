@@ -3,7 +3,7 @@
 ## Download and Qualtity check of raw reads
 
 With PERF capable to identify the microsatellites within the A.fumimgatus reference genome, I wanted to conduct test PERF with a genome constructed from raw reads.
-Therefore, I have obtained the raw reads of CM21, a _A. fumigatus strains_ obtained by my lab. The raw reads were obtained from NCBI and uploaded to Sharcnet. As these files are large and are not required after the run is finished, I created a scratch directory to store them. I also renamed the SSR for cm21 file to SRR_cm21.
+Therefore, I have obtained the raw reads of CM21, an _A. fumigatus strains_ obtained by my lab. The raw reads were obtained from NCBI and uploaded to Sharcnet. As these files are large and are not required after the run is finished, I created a scratch directory to store them. I also renamed the SSR for Cm21 file to SRR_cm21.
 
 ```{bash}
 $ mkdir ~/scratch/reads ; cd ~/scratch/reads
@@ -78,14 +78,13 @@ drwxr-x--- 2 gk1995 gk1995   33280 Apr 29 14:10 multiqc_data
 -rw-r----- 1 gk1995 gk1995 1152757 Apr 29 14:10 multiqc_report.html
 drwxr-x--- 2 gk1995 gk1995   33280 Apr 29 13:52 reads
 ```
-The multiqc html report is found [HERE](https://rpubs.com/Greg1995/multiqc_cm21_raw)
+#### The multiqc html report is found [HERE](https://rpubs.com/Greg1995/multiqc_cm21_raw)
 
 ## Trimming the raw reads
 
-The reads appear to be trimmed for cm21. However, just in case I will run trimmomatic. It would be useful to incorperate trimming into the pipeline if additional strains are used. As trimmomatic in Sharcnet is used quite often, I added addition commands and code to view the progress of the script. 
+From the multiqc report, the reads appear to be trimmed for CM21. However, just in case I will run trimmomatic. It would be useful to incorperate trimming into the pipeline if additional strains are used. 
 
-In this run I used the illumina adapters below. The correct adpaters need to be identified if raw reads were used
-
+In this run I used the illumina adapters below. The correct adpaters need to be identified if raw reads were used. Typically The adapter sequences are identified by Multiqc.
 
 ```{bash}
 $ mkdir trimmed_reads
@@ -122,7 +121,6 @@ ____________________
 $ sbatch ~/bash_files/trimmo_pair.sh ~/scratch/reads/SRR_cm21_1.fastq ~/scratch/reads/SRR_cm21_2.fastq cm21
 ```
 
-
 We will create a separate folder for the multiqc run of the trimmed files
 
 ```{bash}
@@ -133,8 +131,8 @@ $ multiqc ~/scratch/trimmed_fastqc_outputs/
 
 ```
 
-multiqc html report is found [HERE](https://rpubs.com/Greg1995/CM21_multiqc_trimmed)
-Everything looks good. There are still no adapter sequences
+#### multiqc html report is found [HERE](https://rpubs.com/Greg1995/CM21_multiqc_trimmed)
+Everything looks good. There are still no adapter sequences.
 
 ## To start alingning the CM21 Genome, Click [HERE](https://github.com/GregK10/GK_722_project/blob/main/3_Genome_Alignment_and_Consensus.md)
 
