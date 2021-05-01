@@ -61,8 +61,8 @@ The script below can be pasted into an R markdown file.
 
 Within the SSR html outputs for both Af293 and CM21, there was on option to download the csv that details the SSR position and type. I downloaded the file, provided headers and saved it is as a csv.
 
-The headers were
-|chromosome|	start|	end|	repeat|	bp_length	|sense|	repeat_number|	start_repeat|
+The headers were: 
+chromosome,	start,	end,	repeat,	bp_length,	sense,	repeat_number,	start_repeat,
 
 
 ```{r}
