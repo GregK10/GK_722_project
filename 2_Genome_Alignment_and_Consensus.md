@@ -1,7 +1,5 @@
----
-title: "2_Genome_Alignment and concensus mapping"
-output: html_document
----
+want to go back to [Perf and the reference genome?](https://github.com/GregK10/GK_722_project/blob/main/1_Perf_and_the_reference_genome.md)
+
 ## Genome Alignment and Consensus
 
 Next up, we want to align the cm21 genome to the af293 reference genome. I will be using bwa for aligning
@@ -94,4 +92,4 @@ ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
 TGGTTCTTGGAACGACATTGTTCTCACCTAGTGTGATGAGCGTTCGTCAAGTTCCAAAGC
 ```
 
-Next up, I will run PERF on the CM21 genome. Click here to continue.
+Next up, I will run PERF on the CM21 genome. Click [here](https://github.com/GregK10/GK_722_project/blob/main/3_PERF_and_plotting_results.md) to continue.
