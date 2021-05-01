@@ -1,7 +1,6 @@
 # GK_722_project
-My Bio722 individual project code
 
-Welcome to my 722 project Github page. For my project, I looked to identify and investigate microsatellite (SSR) loci in _A. fumigatus_ using the reference Af293 and the lab strain CM21
+#### Welcome to my 722 project Github page. For my project, I looked to identify and investigate microsatellite (SSR) loci in _A. fumigatus_ using the reference Af293 and the lab strain CM21
 
 In this project, I used Sharcnet to conduct my analyses. I initially attempted to use Brian's cluster, but I had difficulties getting PERF to work. The authors primary suggestion was to use the pip install, but we are discouraged from using it on the cluster. The alternate methods described in the PERF readme did not work on Brian's cluster so I switched to running the program on Sharcnet. 
 
