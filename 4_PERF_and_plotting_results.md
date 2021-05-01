@@ -1,4 +1,4 @@
-Go back to [Genome Alignment and Consensus](https://github.com/GregK10/GK_722_project/blob/main/2_Genome_Alignment_and_Consensus.md)
+Go back to [Genome Alignment and Consensus](https://github.com/GregK10/GK_722_project/blob/main/3_Genome_Alignment_and_Consensus.md)
 
 ## Running PERF with CM21
 With the cm21 consensus sequence obtained, I then ran the PERF script to identify the SSR alleles. I used the same bash script I used for af293
@@ -29,7 +29,7 @@ Generating HTML report. This may take a while..
 HTML report successfully saved to cm_perf_con_v2.html
 ```
 
-This generated the html summary report see HERE
+This generated the html summary report see [HERE](https://rpubs.com/Greg1995/CM21_PERF)
 
 Similar to the run with af293, I was not able to use the annotation file to identify if the SSRs are within annotated locations in the genome.  
 
@@ -118,8 +118,8 @@ ggplot(data = ssr3_cm21, aes(x = end, fill = chromosome)) +
  
  
 This concludes my work-flow for this project. I was greatly interested in identifying and comparing the presence and length of SSRs within intronic, exonic and promoter regions of the genome between different strains. Unfortunately I did not generate this data. I may need to contact the authors and inquire what may be the issue. 
-In the future when I will be using more than one strain, I would modify the scripts to include a for loop for each strain.  
+In the future when I will be using more than one strain, I would optomize the scripts to include ```for``` loops to run multiple strains.  
 
 The PERF authors recently updated their scripts, potentially creating a bug for the annotation step. 
 
-#### Thank you for viewing my project. To go back to the readme file, click [HERE](https://github.com/GregK10/GK_722_project/blob/main/0_README.md).
+### Thank you for viewing my project. To go back to the readme file, click [HERE](https://github.com/GregK10/GK_722_project/blob/main/0_README.md).
