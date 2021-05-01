@@ -18,3 +18,4 @@ For my less computationally intense scripts, I detailed
 #SBATCH --mem=15G
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 ```
+### To proceed to running PERF, click [HERE](https://github.com/GregK10/GK_722_project/blob/main/1_Perf_and_the_reference_genome.md)
