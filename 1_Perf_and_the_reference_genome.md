@@ -2,7 +2,7 @@ Accidently went to far? Click [HERE](https://github.com/GregK10/GK_722_project/b
 
 ## Initial run of PERF
 
-For the first part of my project, I tested the algorithm PERF on the_ A. fumigatus_ reference strain Af293. PERF is a recently developed algorith that identifies SSR motifs from within DNA sequences.
+For the first part of my project, I tested the algorithm PERF on the _A. fumigatus_ reference strain Af293. PERF is a recently developed algorith that identifies SSR motifs from within DNA sequences.
 
 I needed to install the dependencies required for PERF to run.
 ```{bash}
