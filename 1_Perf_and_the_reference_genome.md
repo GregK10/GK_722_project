@@ -46,7 +46,7 @@ $ chmod +x ~/bash_files/perf.sh # I only included this once as it has to be done
 ```
 
 
-The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information shown in fasta format below (taken from https://raw.githubusercontent.com/RKMlab/perf/master/README.md). The output can be specified in fastq format as well.
+The script will take the input file (reference genome) and output in a filename I designate. --analyse creates a html file that summarizes the microsatellite information shown in fasta format below (taken from [Perf GitHub](https://raw.githubusercontent.com/RKMlab/perf/master/README.md)). The output can be specified in fastq format as well.
 
 | S.No | Column | Description |
 |:----:| ------ | ----------- |
