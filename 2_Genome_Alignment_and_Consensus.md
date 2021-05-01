@@ -1,4 +1,4 @@
-want to go back to [Perf and the reference genome?](https://github.com/GregK10/GK_722_project/blob/main/1_Perf_and_the_reference_genome.md)
+Want to go back to [Perf and the reference genome?](https://github.com/GregK10/GK_722_project/blob/main/1_Perf_and_the_reference_genome.md)
 
 ## Genome Alignment and Consensus
 
