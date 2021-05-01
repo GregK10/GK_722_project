@@ -1,7 +1,5 @@
----
-title: "Perf and the reference genome"
-output: html_document
----
+Accidently went to far? Click [HERE](https://github.com/GregK10/GK_722_project/blob/main/0_README.md) to go back to the readme
+
 ## Initial run of PERF
 
 For the first part of my project, I tested the algorithm PERF on the A. fumigatus reference strain af293. PERF is a recently developed to identify microsatellite alleles from DNA sequences.
@@ -215,6 +213,6 @@ If the annotation completed successfully, It would have provided me with the inf
 | 15 | Distance from TSS | Distance of the repeat from the TSS of the gene. |
 
 
-### Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click here to continue.
+### Up next, I obtained the raw reads from the A. fumgiatus strain cm21 and used a trimmomatic script to trim the raw reads. Click [HERE](https://github.com/GregK10/GK_722_project/blob/main/Obtaining_trimming_and_QC_of_reads.Rmd) to continue.
 
 
