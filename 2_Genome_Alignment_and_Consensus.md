@@ -1,12 +1,12 @@
 ---
-title: "3_Genome_Alignment and concensus mapping"
+title: "2_Genome_Alignment and concensus mapping"
 output: html_document
 ---
+## Genome Alignment and Consensus
 
 Next up, we want to align the cm21 genome to the af293 reference genome. I will be using bwa for aligning
 
 First, the reference genome is indexed so it can ran by bwa mem. I have included ```bwa index``` into my bash script for simplicity, however, it should be run separately as multiple index runs are not needed.
-
 
 ```{bash}
 $ nano ~/bash_files/bwa.sh
@@ -67,6 +67,7 @@ $ more cm21.markdup_mstats.txt
 54096 + 0 with mate mapped to a different chr (mapQ>=5)
 
 ```
+## Creating the Consensus
 
 With the summary text looking good as all reads passed, I then alligned the cm21 gennome to the af293 genome to generate a consensus fasta file. I used the ```vcf-consensus``` command from vcftools to create the consensus sequence and then converted it to a fasta file. PERF requires either fasta for fastq files for the script to run.
 
@@ -93,5 +94,4 @@ ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
 TGGTTCTTGGAACGACATTGTTCTCACCTAGTGTGATGAGCGTTCGTCAAGTTCCAAAGC
 ```
 
-
-Next up, I will run PERF on the cm21 genome. Click here to continue.
+Next up, I will run PERF on the CM21 genome. Click here to continue.
