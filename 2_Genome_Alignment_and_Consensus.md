@@ -92,4 +92,4 @@ ccttTAGGCAACTGCAGCcTCAAACCgGATTTGGATGGGCCgCACGCGTGCTAGGTTTCC
 TGGTTCTTGGAACGACATTGTTCTCACCTAGTGTGATGAGCGTTCGTCAAGTTCCAAAGC
 ```
 
-Next up, I will run PERF on the CM21 genome. Click [here](https://github.com/GregK10/GK_722_project/blob/main/3_PERF_and_plotting_results.md) to continue.
+### Next up, I will run PERF on the CM21 genome. Click [here](https://github.com/GregK10/GK_722_project/blob/main/3_PERF_and_plotting_results.md) to continue.
